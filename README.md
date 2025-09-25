@@ -7,24 +7,24 @@ A real-time e-commerce analytics tool that detects **herd behavior** — sudden 
 ## 📂 Project Structure
 
 herd-behavior-alerter/
-│── backend/                # FastAPI backend
+│── backend/               
 │   ├── app/
-│   │   ├── detector.py     # Herd behavior detection logic
-│   │   └── main.py         # FastAPI entry point
-│   ├── Dockerfile          # Backend Docker setup
-│   └── requirements.txt    # Python dependencies
+│   │   ├── detector.py    
+│   │   └── main.py       
+│   ├── Dockerfile         
+│   └── requirements.txt    
 │
-│── frontend/               # React frontend
-│   ├── public/             # Static assets
-│   ├── src/                # React components
-│   ├── Dockerfile          # Frontend Docker setup
-│   ├── package.json        # Node.js dependencies
+│── frontend/              
+│   ├── public/            
+│   ├── src/               
+│   ├── Dockerfile         
+│   ├── package.json       
 │   └── .gitignore
 │
-│── docker-compose.yml      # Orchestrates frontend + backend
-│── README.md               # Project documentation
-│── LICENSE                 # License info
-│── .gitignore              # Root gitignore
+│── docker-compose.yml      
+│── README.md               
+│── LICENSE                 
+│── .gitignore             
 
 ---
 
