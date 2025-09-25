@@ -76,6 +76,3 @@ This project is licensed under the MIT License – see the LICENSE file for deta
 Pull requests are welcome. For major changes, please open an issue first to discuss your ideas.  
 
 ---
-
-## 📧 Contact
-Made with ❤️ by Shubham.
