@@ -1,0 +1,86 @@
+version: "3.9"
+services:
+  zookeeper:
+    image: bitnami/zookeeper:latest
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ALLOW_ANONYMOUS_LOGIN: "yes"
+    volumes: # Add a volume for Zookeeper data
+      - "zookeeper_data:/bitnami/zookeeper"
+    logging: &logging-config
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  kafka:
+    image: bitnami/kafka:3.5.1
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://:9092
+      ALLOW_PLAINTEXT_LISTENER: "yes"
+    depends_on:
+      - zookeeper
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/bitnami/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes: # Add a volume for Kafka data
+      - "kafka_data:/bitnami/kafka"
+    logging: *logging-config
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes: # Add a volume for Redis data
+      - "redis_data:/data"
+    logging: *logging-config
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      kafka:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    logging: *logging-config
+
+  worker:
+    build: ./backend
+    container_name: worker
+    command: python -u app/worker.py
+    depends_on:
+      kafka:
+        condition: service_healthy
+    logging: *logging-config
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    logging: *logging-config
+
+# --- Define the persistent volumes ---
+volumes:
+  zookeeper_data:
+  kafka_data:
+  redis_data:

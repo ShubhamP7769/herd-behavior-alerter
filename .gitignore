@@ -1,0 +1,51 @@
+# =========================
+# General
+# =========================
+.DS_Store
+Thumbs.db
+*.log
+*.env
+*.pyc
+__pycache__/
+
+# =========================
+# Backend (Python / FastAPI)
+# =========================
+backend/__pycache__/
+backend/*.pyc
+backend/venv/
+backend/.env
+backend/__pypackages__/
+backend/.mypy_cache/
+backend/.pytest_cache/
+
+# =========================
+# Frontend (React / Node)
+# =========================
+frontend/node_modules/
+frontend/build/
+frontend/.env
+frontend/.DS_Store
+frontend/.cache/
+
+# =========================
+# Root level Node (if you used node for scripts or Docker)
+# =========================
+node_modules/
+package-lock.json
+yarn.lock
+
+# =========================
+# Docker
+# =========================
+docker-compose.override.yml
+*.log
+*.pid
+
+# =========================
+# IDEs
+# =========================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
